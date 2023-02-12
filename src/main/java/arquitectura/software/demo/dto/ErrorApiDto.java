@@ -1,13 +1,21 @@
 package arquitectura.software.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ErrorApiDto {
+    @JsonProperty("code")
     private String code;
+    @JsonProperty("message")
     private String message;
 
     //Constructor
     public ErrorApiDto(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    //Constructor vacio
+    public ErrorApiDto() {
     }
 
     //Getters and Setters
@@ -29,6 +37,8 @@ public class ErrorApiDto {
     public String toString() {
         return "ErrorApiDto [code=" + code + ", message=" + message + "]";
     }
+
     
+
     
 }

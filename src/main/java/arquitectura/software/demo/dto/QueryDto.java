@@ -3,7 +3,7 @@ package arquitectura.software.demo.dto;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-// @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class QueryDto {
     @JsonProperty("from")
     private String from;

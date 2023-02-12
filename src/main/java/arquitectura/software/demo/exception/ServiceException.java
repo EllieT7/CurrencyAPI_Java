@@ -1,11 +1,19 @@
 package arquitectura.software.demo.exception;
 
 public class ServiceException extends RuntimeException{
-    public ServiceException(String message) {
+    private String code;
+
+    public ServiceException(String message, String code) {
         super(message);
+        this.code = code;
+
     }
 
-    public ServiceException(String message, Throwable cause) {
-        super(message, cause);
+    public String getCode() {
+        return code;
     }
+    public String getMessage() {
+        return super.getMessage();
+    }
+
 }

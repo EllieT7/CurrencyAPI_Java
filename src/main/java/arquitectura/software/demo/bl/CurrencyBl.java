@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import arquitectura.software.demo.dto.ErrorServiceDto;
 import arquitectura.software.demo.dto.RequestDto;
 import arquitectura.software.demo.dto.ResponseDto;
 import arquitectura.software.demo.exception.ServiceException;
@@ -18,6 +19,7 @@ import okhttp3.Response;
 @Service
 public class CurrencyBl {
     Logger LOGGER = Logger.getLogger(CurrencyBl.class.getName());
+
     /**
      * Método que convierte una moneda a otra
      * @param requestDto
@@ -25,19 +27,22 @@ public class CurrencyBl {
      */
     public ResponseDto convert(RequestDto requestDto) {
         if(requestDto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
-            LOGGER.log(Level.WARNING,"No se puede convertir una cantidad menor o igual a 0");
-            throw new ServiceException("No se puede convertir una cantidad menor o igual a 0");
+            LOGGER.log(Level.WARNING,"No se puede convertir una cantidad menor a 0");
+            throw new ServiceException("No se puede convertir una cantidad menor a 0", "bad_amount");
         }
         LOGGER.info("Convirtiendo " + requestDto.getAmount() + " " + requestDto.getFrom() + " a " + requestDto.getTo());
         Response response = invokeApi("https://api.apilayer.com/exchangerates_data/convert?to="+requestDto.getTo()+"&from="+requestDto.getFrom()+"&amount="+requestDto.getAmount());
               
         if(response.isSuccessful()) {
+            //Obtenemos la respuesta exitosa
             ResponseDto responseDto = parseResponse(response);
             LOGGER.info("Respuesta de la API: " + responseDto);
             return responseDto;
         }else{
-            LOGGER.info("Error al invocar la API");
-            throw new ServiceException("Error al invocar la API");
+            //Obtenemos el error
+            ErrorServiceDto errorServiceDto = parseError(response);
+            LOGGER.log(Level.WARNING,"Error de la API: " + errorServiceDto.getError());
+            throw new ServiceException(errorServiceDto.getError().getMessage(), errorServiceDto.getError().getCode());
         }
         
     }
@@ -61,8 +66,8 @@ public class CurrencyBl {
             return response;
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.info("Error al invocar la API");
-            return null;
+            LOGGER.log(Level.WARNING, "Error al invocar la API");
+            throw new ServiceException("Error al invocar la API","timeout");
         }    
     }
 
@@ -80,9 +85,26 @@ public class CurrencyBl {
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.info("Error al parsear la respuesta de la API");
-            return null;
+            throw new ServiceException("Error interno, parseo","internal_error");
         }
 
+    }
+
+    /**
+     * Método que parsea el error de la API a un errorServiceDto
+     * @param response
+     * @return ErrorServiceDto
+     */
+    private ErrorServiceDto parseError(Response response) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ErrorServiceDto errorServiceDto = mapper.readValue(response.body().string(), ErrorServiceDto.class);
+            return errorServiceDto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.info("Error al parsear el error de la API");
+            throw new ServiceException("Error interno, parseo","internal_error");
+        }
     }
 
 
