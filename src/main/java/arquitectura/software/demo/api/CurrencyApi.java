@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import arquitectura.software.demo.bl.CurrencyBl;
+import arquitectura.software.demo.dto.RequestDto;
 import arquitectura.software.demo.dto.ResponseDto;
 
 @RestController
@@ -24,7 +25,9 @@ public class CurrencyApi {
      * Endpoint GET para obtener la conversión de una moneda a otra
      */
     @GetMapping("/convert")
-    public String convert(@RequestParam String from, @RequestParam String to, @RequestParam BigDecimal amount) {
-        return "Hola:" + from + "   " + to + "   " + amount;
+    public ResponseDto convert(@RequestParam String from, @RequestParam String to, @RequestParam BigDecimal amount) {
+        RequestDto requestDto = new RequestDto(from, to, amount);
+        ResponseDto result = currencyBl.convert(requestDto);
+        return result;
     }
 }
