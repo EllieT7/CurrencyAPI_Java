@@ -2,12 +2,14 @@ package arquitectura.software.demo.dto;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-@JsonIgnoreProperties(ignoreUnknown = true)
+import com.fasterxml.jackson.annotation.JsonProperty;
+// @JsonIgnoreProperties(ignoreUnknown = true)
 public class QueryDto {
-    
+    @JsonProperty("from")
     private String from;
+    @JsonProperty("to")
     private String to;
+    @JsonProperty("amount")
     private BigDecimal amount;
 
     

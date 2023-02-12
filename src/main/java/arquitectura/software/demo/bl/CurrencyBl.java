@@ -31,7 +31,7 @@ public class CurrencyBl {
         }
         LOGGER.info("Convirtiendo " + requestDto.getAmount() + " " + requestDto.getFrom() + " a " + requestDto.getTo());
         Response response = invokeApi("https://api.apilayer.com/exchangerates_data/convert?to="+requestDto.getTo()+"&from="+requestDto.getFrom()+"&amount="+requestDto.getAmount());
-        //TODO: Parsear la respuesta y retornar un objeto ResponseDto
+        
         if(response == null) {
             LOGGER.info("Error al invocar la API");
             return null;

@@ -33,8 +33,6 @@ public class CurrencyApi {
         //Log procesando solicitud
         LOGGER.log(Level.INFO, "Procesando solicitud de conversion de moneda: " + requestDto.getAmount()+ " " + requestDto.getFrom() + " a " + requestDto.getTo());
         ResponseDto result = currencyBl.convert(requestDto);
-        //Log respuesta
-        LOGGER.log(Level.INFO, "Respuesta de la API Final: " + result);
         return result;
     }
 }
