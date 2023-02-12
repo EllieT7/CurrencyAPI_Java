@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arquitectura.software.demo.dto.RequestDto;
 import arquitectura.software.demo.dto.ResponseDto;
-
+import arquitectura.software.demo.exception.ServiceException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,22 +26,23 @@ public class CurrencyBl {
     public ResponseDto convert(RequestDto requestDto) {
         if(requestDto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             LOGGER.log(Level.WARNING,"No se puede convertir una cantidad menor o igual a 0");
-            return null;
-            //TODO: Retornar una excepción
+            throw new ServiceException("No se puede convertir una cantidad menor o igual a 0");
         }
         LOGGER.info("Convirtiendo " + requestDto.getAmount() + " " + requestDto.getFrom() + " a " + requestDto.getTo());
         Response response = invokeApi("https://api.apilayer.com/exchangerates_data/convert?to="+requestDto.getTo()+"&from="+requestDto.getFrom()+"&amount="+requestDto.getAmount());
-        
-        if(response == null) {
-            LOGGER.info("Error al invocar la API");
-            return null;
-        }else{
+              
+        if(response.isSuccessful()) {
             ResponseDto responseDto = parseResponse(response);
             LOGGER.info("Respuesta de la API: " + responseDto);
             return responseDto;
+        }else{
+            LOGGER.info("Error al invocar la API");
+            throw new ServiceException("Error al invocar la API");
         }
         
     }
+        
+    
     /**
      * Método que invoca la API de conversión de monedas
      * okhtttp3

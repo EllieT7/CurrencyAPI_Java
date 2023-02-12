@@ -1,3 +1,13 @@
 ### Mandamos una petición GET a la API para obtener la conversion de monedas
-   
+  
 GET http://localhost:8080/api/currency/convert?to=bob&from=usd&amount=1000
+
+###
+##Prueba con error de moneda
+
+GET http://localhost:8080/api/currency/convert?to=usd&from=bobs&amount=1000
+
+###
+##Prueba con monto menor a 0
+
+GET http://localhost:8080/api/currency/convert?to=usd&from=bob&amount=-1000
