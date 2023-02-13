@@ -1,0 +1,20 @@
+2023-02-12 20:07:28,100 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2023-02-12 20:07:28,117 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2023-02-12 20:07:28,118 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2023-02-12 20:07:28,120 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-12 20:07:28,268 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2023-02-12 20:07:28,271 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1367 ms
+2023-02-12 20:07:29,734 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2023-02-12 20:07:29,769 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2023-02-12 20:07:29,782 INFO org.springframework.boot.StartupInfoLogger [main] Started DemoApplication in 3.542 seconds (JVM running for 3.954)
+2023-02-12 20:07:35,391 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-12 20:07:35,407 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-02-12 20:07:35,433 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 16 ms
+2023-02-12 20:07:35,538 INFO arquitectura.software.demo.api.CurrencyApi [http-nio-8080-exec-1] Procesando solicitud de conversion de moneda: 1000 usd a bob
+2023-02-12 20:07:35,542 INFO arquitectura.software.demo.bl.CurrencyBl [http-nio-8080-exec-1] Convirtiendo 1000 usd a bob
+2023-02-12 20:07:36,706 INFO arquitectura.software.demo.bl.CurrencyBl [http-nio-8080-exec-1] Respuesta de la API: ResponseDto [date=2023-02-13, query=QueryDto [amount=1000, from=USD, to=BOB], result=6907.452, success=true]
+2023-02-12 20:07:36,966 INFO arquitectura.software.demo.api.CurrencyApi [http-nio-8080-exec-2] Procesando solicitud de conversion de moneda: 1000 bobs a usd
+2023-02-12 20:07:36,967 INFO arquitectura.software.demo.bl.CurrencyBl [http-nio-8080-exec-2] Convirtiendo 1000 bobs a usd
+2023-02-12 20:07:37,590 WARN arquitectura.software.demo.bl.CurrencyBl [http-nio-8080-exec-2] Error de la API: ErrorApiDto [code=invalid_from_currency, message=You have entered an invalid "from" property. [Example: from=EUR]]
+2023-02-12 20:07:39,439 INFO arquitectura.software.demo.api.CurrencyApi [http-nio-8080-exec-3] Procesando solicitud de conversion de moneda: -1000 bob a usd
+2023-02-12 20:07:39,440 WARN arquitectura.software.demo.bl.CurrencyBl [http-nio-8080-exec-3] No se puede convertir una cantidad menor a 0
