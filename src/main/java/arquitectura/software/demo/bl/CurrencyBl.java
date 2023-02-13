@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Env;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +21,9 @@ import okhttp3.Response;
 @Service
 public class CurrencyBl {
     Logger LOGGER = Logger.getLogger(CurrencyBl.class.getName());
+    //Declaramos la api key
+    @Value("${api.key}")
+    private String apiKey;
 
     /**
      * Método que convierte una moneda a otra
@@ -58,7 +63,7 @@ public class CurrencyBl {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()
         .url(endpoint)
-        .addHeader("apikey", "DKtvGE5j3a4vFH9qUICssZzdVdKJIla9")
+        .addHeader("apikey", apiKey)
         .method("GET", null)
         .build();
         try {
